@@ -1,12 +1,12 @@
-import { Films } from "../components/lists/FilmList";
-import { Species } from "../components/lists/SpeciesList";
+import { Characters } from "../components/lists/CharacterList";
+import { Planets } from "../components/lists/PlanetsList";
 import { Starships } from "../components/lists/StarshipsList";
 
 export const ListsPage = () => {
   return (
     <>
-      <Films />
-      <Species />
+      <Characters />
+      <Planets />
       <Starships />
     </>
   );

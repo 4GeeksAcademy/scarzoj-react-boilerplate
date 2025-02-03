@@ -2,29 +2,29 @@ import { isEmpty } from "lodash";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router";
 
-import { getFilm } from "../services/api/films";
+import { getPlanet } from "../services/api/planets";
 import { Loading } from "../components/Loading";
 
-export const FilmPage = () => {
-  const [film, setFilm] = useState({});
+export const PlanetPage = () => {
+  const [planet, setPlanet] = useState({});
 
-  const { filmId } = useParams();
+  const { planetId } = useParams();
 
   useEffect(() => {
-    getFilm(filmId).then((film) => {
-      setFilm(film);
+    getPlanet(planetId).then((planet) => {
+      setPlanet(planet);
     });
-  }, [filmId]);
+  }, [planetId]);
 
-  return isEmpty(film) ? (
+  return isEmpty(planet) ? (
     <Loading />
   ) : (
     <>
-      {!isEmpty(film) && (
+      {!isEmpty(planet) && (
         <div style={{ justifyItems: "center" }}>
-          <h1>{film.properties.title}</h1>
+          <h1>{planet.name}</h1>
           <div style={{ whiteSpace: "pre-wrap" }}>
-            {film.properties.opening_crawl}
+            Population: {planet.population}
           </div>
         </div>
       )}

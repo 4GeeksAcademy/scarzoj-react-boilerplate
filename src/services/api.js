@@ -1,11 +1,10 @@
-export const baseUrl = "https://www.swapi.tech/api/";
+export const baseUrl =
+  "https://opulent-succotash-v6vwg4qv6462656-8080.app.github.dev/";
 
-export const filmsUrl = "films/";
-export const peopleUrl = "people/";
+export const usersUrl = "users/";
+export const charactersUrl = "characters/";
 export const planetsUrl = "planets/";
-export const speciesUrl = "species/";
 export const starshipsUrl = "starships/";
-export const vehiclesUrl = "vehicles/";
 
 export const fetchWrapper = async (input, init) => {
   return await fetch(input, init)

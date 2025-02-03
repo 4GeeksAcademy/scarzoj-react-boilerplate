@@ -4,14 +4,14 @@ const starshipsEndpoint = `${baseUrl}${starshipsUrl}`;
 
 export const getStarships = async () => {
   return await fetchWrapper(starshipsEndpoint).then((data) => {
-    return data.results;
+    return data;
   });
 };
 
 export const getStarship = async (starshipId) => {
   return await fetchWrapper(`${starshipsEndpoint}${starshipId}`).then(
     (data) => {
-      return data.result;
+      return data;
     },
   );
 };

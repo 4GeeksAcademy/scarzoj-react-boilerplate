@@ -23,10 +23,8 @@ export const StarshipPage = () => {
     <>
       {!isEmpty(starship) && (
         <div style={{ justifyItems: "center" }}>
-          <h1>{starship.properties.name}</h1>
-          <div style={{ whiteSpace: "pre-wrap" }}>
-            {starship.properties.manufacturer}
-          </div>
+          <h1>{starship.name}</h1>
+          <div style={{ whiteSpace: "pre-wrap" }}>Crew: {starship.crew}</div>
         </div>
       )}
     </>

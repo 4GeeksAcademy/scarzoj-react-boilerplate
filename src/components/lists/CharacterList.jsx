@@ -5,16 +5,16 @@ import { NavLink } from "react-router";
 import { isEmpty } from "lodash";
 
 import { FavoritesContext } from "../../context/Favorites";
-import { getStarships } from "../../services/api/starships";
+import { getCharactersList } from "../../services/api/characters";
 
-export const Starships = () => {
-  const [starships, setstarships] = useState([]);
+export const Characters = () => {
+  const [characters, setCharacters] = useState([]);
   const { favorites, addToFavorites, deleteFavorite } =
     useContext(FavoritesContext);
 
   useEffect(() => {
-    getStarships().then((starships) => {
-      setstarships(starships);
+    getCharactersList().then((characters) => {
+      setCharacters(characters);
     });
   }, []);
 
@@ -26,24 +26,28 @@ export const Starships = () => {
 
   return (
     <div style={{ border: "solid grey" }}>
-      <h1>Starships</h1>
+      <h1>Characters</h1>
       <div style={{ display: "flex", flexDirection: "row", flexWrap: "wrap" }}>
-        {!isEmpty(starships) &&
-          starships.map((starship) => {
+        {!isEmpty(characters) &&
+          characters.map((character) => {
             return (
-              <div key={starship.uid} style={{ margin: "16px" }}>
-                <h3>{starship.name}</h3>
-                <NavLink to={`starships/${starship.id}`}>
+              <div key={character.id} style={{ margin: "16px" }}>
+                <h3>{character.name}</h3>
+                <NavLink to={`characters/${character.id}`}>
                   <Button>View More</Button>
                 </NavLink>
                 <Button
                   onClick={() => {
-                    isFavorited(starship.id, "starships")
-                      ? deleteFavorite(starship.id, "starships")
-                      : addToFavorites(starship.id, starship.name, "starships");
+                    isFavorited(character.id, "characters")
+                      ? deleteFavorite(character.id, "characters")
+                      : addToFavorites(
+                          character.id,
+                          character.name,
+                          "characters",
+                        );
                   }}
                 >
-                  {isFavorited(starship.id, "starships") ? "Unfav" : "Fav"}
+                  {isFavorited(character.id, "characters") ? "Unfav" : "Fav"}
                 </Button>
               </div>
             );

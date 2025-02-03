@@ -1,6 +1,6 @@
 import { ListsPage } from "../../pages/ListsPage";
-import { FilmPage } from "../../pages/FilmPage";
-import { SpeciesPage } from "../../pages/SpeciesPage";
+import { CharacterPage } from "../../pages/CharacterPage";
+import { PlanetPage } from "../../pages/PlanetPage";
 import { StarshipPage } from "../../pages/StarshipPage";
 
 export const routesConfig = [
@@ -10,18 +10,18 @@ export const routesConfig = [
     component: <ListsPage />,
   },
   {
-    name: "Film",
-    path: "/film/:filmId",
-    component: <FilmPage />,
+    name: "Characters",
+    path: "/characters/:characterId",
+    component: <CharacterPage />,
   },
   {
-    name: "Species",
-    path: "/species/:speciesId",
-    component: <SpeciesPage />,
+    name: "Planets",
+    path: "/planets/:planetId",
+    component: <PlanetPage />,
   },
   {
     name: "Starship",
-    path: "/starship/:starshipId",
+    path: "/starships/:starshipId",
     component: <StarshipPage />,
   },
   {

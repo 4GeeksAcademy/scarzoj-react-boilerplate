@@ -1,35 +1,47 @@
-import { createContext, useState } from "react";
+import { createContext, useEffect, useState } from "react";
+import {
+  getUserFavourites,
+  postUserFavourite,
+  deleteUserFavourite,
+} from "../services/api/users";
 
 export const FavoritesContext = createContext({
   favorites: [],
   setFavorites: () => {},
-  deleteFavorite: (id, type) => {},
+  deleteFavorite: (id) => {},
   addToFavorites: (id, name, type) => {},
 });
 
 export const FavoritesProvider = ({ children }) => {
   const [favorites, setFavorites] = useState([]);
 
-  const deleteFavorite = (id, type) => {
-    setFavorites(
-      favorites.filter((favorite) => {
-        return !(favorite.id === id && favorite.type === type);
-      }),
-    );
+  const userId = 1;
+
+  const refreshFavourites = () => {
+    getUserFavourites(userId).then((data) => {
+      setFavorites(data);
+    });
   };
 
-  const addToFavorites = (id, name, type) => {
-    setFavorites([
-      ...favorites,
-      {
-        id: id,
-        name: name,
-        type: type,
-      },
-    ]);
+  const deleteFavorite = (externalId, type) => {
+    const favoriteId = favorites.find((favorite) => {
+      return favorite.type === type && favorite.external_id === externalId;
+    }).id;
+    deleteUserFavourite(userId, favoriteId).then(() => {
+      refreshFavourites();
+    });
   };
 
-  console.log(favorites);
+  const addToFavorites = (externalId, name, type) => {
+    postUserFavourite(userId, externalId, name, type).then(() => {
+      refreshFavourites();
+    });
+  };
+
+  useEffect(() => {
+    refreshFavourites();
+  }, []);
+
   return (
     <FavoritesContext.Provider
       value={{ favorites, setFavorites, addToFavorites, deleteFavorite }}

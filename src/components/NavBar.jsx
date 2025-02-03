@@ -11,9 +11,9 @@ export const NavBar = () => {
 
   const parsedLocation = () => {
     const locations = {
-      film: "Films",
-      species: "Species",
-      starship: "Starships",
+      characters: "Characters",
+      planets: "Planets",
+      starships: "Starships",
     };
     return locations[location.pathname.split("/")[1]] || "";
   };
@@ -34,12 +34,14 @@ export const NavBar = () => {
                   return (
                     <div key={`${favorite.type}${favorite.id}`}>
                       <NavDropdown.Item>
-                        <NavLink to={`${favorite.type}/${favorite.id}`}>
+                        <NavLink
+                          to={`${favorite.type}/${favorite.external_id}`}
+                        >
                           {favorite.name}
                         </NavLink>
                         <Badge
                           onClick={() => {
-                            deleteFavorite(favorite.id, favorite.type);
+                            deleteFavorite(favorite.external_id, favorite.type);
                           }}
                         >
                           {" "}
