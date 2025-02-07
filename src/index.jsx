@@ -7,15 +7,18 @@ import { FavoritesProvider } from "./context/Favorites";
 import { App } from "./App";
 
 import "bootstrap/dist/css/bootstrap.min.css";
+import { UserProvider } from "./context/User";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
 root.render(
   <StrictMode>
     <BrowserRouter>
-      <FavoritesProvider>
-        <App />
-      </FavoritesProvider>
+      <UserProvider>
+        <FavoritesProvider>
+          <App />
+        </FavoritesProvider>
+      </UserProvider>
     </BrowserRouter>
   </StrictMode>,
 );

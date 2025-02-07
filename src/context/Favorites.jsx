@@ -1,9 +1,10 @@
-import { createContext, useEffect, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 import {
   getUserFavourites,
   postUserFavourite,
   deleteUserFavourite,
 } from "../services/api/users";
+import { UserContext } from "./User";
 
 export const FavoritesContext = createContext({
   favorites: [],
@@ -14,10 +15,10 @@ export const FavoritesContext = createContext({
 
 export const FavoritesProvider = ({ children }) => {
   const [favorites, setFavorites] = useState([]);
+  const { user } = useContext(UserContext);
+  const userId = user.id;
 
-  const userId = 1;
-
-  const refreshFavourites = () => {
+  const refreshFavourites = (userId) => {
     getUserFavourites(userId).then((data) => {
       setFavorites(data);
     });
@@ -28,19 +29,19 @@ export const FavoritesProvider = ({ children }) => {
       return favorite.type === type && favorite.external_id === externalId;
     }).id;
     deleteUserFavourite(userId, favoriteId).then(() => {
-      refreshFavourites();
+      refreshFavourites(userId);
     });
   };
 
   const addToFavorites = (externalId, name, type) => {
     postUserFavourite(userId, externalId, name, type).then(() => {
-      refreshFavourites();
+      refreshFavourites(userId);
     });
   };
 
   useEffect(() => {
-    refreshFavourites();
-  }, []);
+    refreshFavourites(userId);
+  }, [userId]);
 
   return (
     <FavoritesContext.Provider

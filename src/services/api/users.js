@@ -1,33 +1,22 @@
-import { baseUrl, fetchWrapper, usersUrl } from "../api";
+import { baseUrl, fetchWrapper } from "../api";
 
-const usersEndpoint = `${baseUrl}${usersUrl}`;
+const usersEndpoint = `${baseUrl}favourites`;
 
-export const getUsers = async () => {
-  return await fetchWrapper(usersEndpoint).then((data) => {
+export const getUserFavourites = async () => {
+  return await fetchWrapper(usersEndpoint, {
+    credentials: "include",
+  }).then((data) => {
     return data;
   });
 };
 
-export const getUser = async (userId) => {
-  return await fetchWrapper(`${usersEndpoint}${userId}`).then((data) => {
-    return data;
-  });
-};
-
-export const getUserFavourites = async (userId) => {
-  return await fetchWrapper(`${usersEndpoint}${userId}/favourites`).then(
-    (data) => {
-      return data;
-    },
-  );
-};
-
-export const postUserFavourite = async (userId, externalId, name, type) => {
-  return await fetchWrapper(`${usersEndpoint}${userId}/favourites`, {
+export const postUserFavourite = async (externalId, name, type) => {
+  return await fetchWrapper(usersEndpoint, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
     },
+    credentials: "include",
     body: JSON.stringify({
       external_id: externalId,
       name: name,
@@ -38,12 +27,13 @@ export const postUserFavourite = async (userId, externalId, name, type) => {
   });
 };
 
-export const deleteUserFavourite = async (userId, favouriteId) => {
-  return await fetchWrapper(`${usersEndpoint}${userId}/favourites`, {
+export const deleteUserFavourite = async (favouriteId) => {
+  return await fetchWrapper(usersEndpoint, {
     method: "DELETE",
     headers: {
       "Content-Type": "application/json",
     },
+    credentials: "include",
     body: JSON.stringify({
       id: favouriteId,
     }),
