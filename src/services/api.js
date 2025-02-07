@@ -1,5 +1,3 @@
-import Cookies from "js-cookie";
-
 export const baseUrl =
   "https://opulent-succotash-v6vwg4qv6462656-8080.app.github.dev/";
 
@@ -19,8 +17,6 @@ export const fetchWrapper = async (input, init) => {
   })
     .then((response) => {
       if (response.ok) {
-        console.log(document.cookie);
-        console.log(Cookies.get());
         return response.json();
       }
       throw new Error(response.statusText || response.status);

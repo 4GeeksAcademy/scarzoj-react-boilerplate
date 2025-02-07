@@ -1,5 +1,4 @@
 import { baseUrl, fetchWrapper } from "../api";
-import Cookies from "js-cookie";
 
 export const postRegister = async (username, email, password) => {
   return await fetchWrapper(`${baseUrl}register`, {
@@ -30,6 +29,7 @@ export const postLogin = async (email, password) => {
       password: password,
     }),
   }).then((data) => {
+    sessionStorage.setItem("csrf_access_token", data.csrf_token);
     return data;
   });
 };
@@ -45,8 +45,3 @@ export const postLogout = async () => {
     return data;
   });
 };
-
-postLogin("jhon777@gmail.com", "asdad").then((data) => {
-  /*     console.log(document.cookie);  
-    console.log(Cookies.get());  */
-});

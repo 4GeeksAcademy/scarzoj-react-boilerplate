@@ -19,9 +19,12 @@ export const Characters = () => {
   }, []);
 
   const isFavorited = (id, type) => {
-    return favorites.some((favorite) => {
-      return favorite.external_id === id && favorite.type === type;
-    });
+    return (
+      !isEmpty(favorites) &&
+      favorites.some((favorite) => {
+        return favorite.external_id === id && favorite.type === type;
+      })
+    );
   };
 
   return (

@@ -2,10 +2,19 @@ import { useContext } from "react";
 import { FavoritesContext } from "../context/Favorites";
 import { isEmpty } from "lodash";
 import { NavLink, useLocation } from "react-router";
-import { Badge, Container, Nav, Navbar, NavDropdown } from "react-bootstrap";
+import {
+  Badge,
+  Button,
+  Container,
+  Nav,
+  Navbar,
+  NavDropdown,
+} from "react-bootstrap";
+import { UserContext } from "../context/User";
 
 export const NavBar = () => {
   const { favorites, deleteFavorite } = useContext(FavoritesContext);
+  const { user, logout } = useContext(UserContext);
 
   let location = useLocation();
 
@@ -28,7 +37,7 @@ export const NavBar = () => {
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
-            {!isEmpty(favorites) && (
+            {!isEmpty(user) && !isEmpty(favorites) && (
               <NavDropdown title="Favorites" id="basic-nav-dropdown">
                 {favorites.map((favorite) => {
                   return (
@@ -55,6 +64,11 @@ export const NavBar = () => {
             )}
           </Nav>
         </Navbar.Collapse>
+        {!isEmpty(user) && (
+          <Button className="justify-content-end" onClick={() => logout()}>
+            Logout
+          </Button>
+        )}
       </Container>
     </Navbar>
   );

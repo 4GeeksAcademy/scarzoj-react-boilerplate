@@ -5,6 +5,7 @@ import {
   deleteUserFavourite,
 } from "../services/api/users";
 import { UserContext } from "./User";
+import { isEmpty } from "lodash";
 
 export const FavoritesContext = createContext({
   favorites: [],
@@ -16,10 +17,9 @@ export const FavoritesContext = createContext({
 export const FavoritesProvider = ({ children }) => {
   const [favorites, setFavorites] = useState([]);
   const { user } = useContext(UserContext);
-  const userId = user.id;
 
-  const refreshFavourites = (userId) => {
-    getUserFavourites(userId).then((data) => {
+  const refreshFavourites = () => {
+    getUserFavourites().then((data) => {
       setFavorites(data);
     });
   };
@@ -28,20 +28,22 @@ export const FavoritesProvider = ({ children }) => {
     const favoriteId = favorites.find((favorite) => {
       return favorite.type === type && favorite.external_id === externalId;
     }).id;
-    deleteUserFavourite(userId, favoriteId).then(() => {
-      refreshFavourites(userId);
+    deleteUserFavourite(favoriteId).then(() => {
+      refreshFavourites();
     });
   };
 
   const addToFavorites = (externalId, name, type) => {
-    postUserFavourite(userId, externalId, name, type).then(() => {
-      refreshFavourites(userId);
+    postUserFavourite(externalId, name, type).then(() => {
+      refreshFavourites();
     });
   };
 
   useEffect(() => {
-    refreshFavourites(userId);
-  }, [userId]);
+    if (!isEmpty(user)) {
+      refreshFavourites();
+    }
+  }, [user]);
 
   return (
     <FavoritesContext.Provider
